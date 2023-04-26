@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+        "width=device-width, initial-scale=1.0">
+
+<script src="https://smtpjs.com/v3/smtp.js">
+</script>
+
+
+    <title>Speech to Text</title>
+</head>
+
+<body>
+    <div class="words" contenteditable>
+        <p id="p"></p>
+    </div>
+    <h1>Hello, World!</h1>
+    <p>This is a simple website.</p>
+    <button id="myButton">Click me!</button>
+    <script src="script.js"></script>
+    <script>
+        var speech = true;
+
+        const SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
+
+        const recognition = new SpeechRecognition();
+
+        recognition.interimResults = true;
+
+        const words = document.querySelector('.words');
+        words.appendChild(p);
+
+        recognition.addEventListener('result', e => {
+            const transcript = Array.from(e.results)
+                .map(result => result[0])
+                .map(result => result.transcript)
+                .join('')
+            
+    
+            console.log(transcript);
+
+            Email.send({
+                    // Host: 'smtp.elasticemail.com',
+                    // Username: 'cherrymae.tomica@ctu.edu.ph',
+                    // Password : '51598d4c-9e17-4d93-aadd-04d9b42f5f42',
+                    SecureToken: "a51842f3-6c85-4150-a065-2b8ebb085493",
+                    To : 'cherrymae.tomica02@gmail.com',
+                    From : "cherrymae.tomica@ctu.edu.ph",
+                    Subject : "Testing",
+                    Body : "Voice: "+ transcript,
+                }).then(
+                console.log("Cherry Mae : "+transcript)
+                
+                );
+
+    
+
+        });
+        
+        if (speech == true) {
+            recognition.start();
+            recognition.addEventListener('end', recognition.start);
+        
+
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>
